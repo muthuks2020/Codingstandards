@@ -92,14 +92,5 @@ Example : [Comparing the performance difference of varied jQuery 1.7 selectors ?
 
 * Code Review with Microsoft tools: [http://msdn.microsoft.com/en-us/library/hh474795.aspx#code_review_request](http://msdn.microsoft.com/en-us/library/hh474795.aspx#code_review_request)
 
-* Checklist example: [http://courses.cs.washington.edu/courses/cse403/12wi/sections/12wi_code_review_checklist.pdf](http://courses.cs.washington.edu/courses/cse403/12wi/sections/12wi_code_review_checklist.pdf)
 
-* Hadoop Code Review: [https://wiki.apache.org/hadoop/CodeReviewChecklist](https://wiki.apache.org/hadoop/CodeReviewChecklist)
 
-## Authors and contributors
-
-### Current
-* [Yassine Azzout](http://yass.io) (Creator)
-
-### License
-[MIT license](http://www.opensource.org/licenses/Mit)
