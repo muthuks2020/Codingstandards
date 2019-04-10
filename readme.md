@@ -127,8 +127,4 @@ At the same time, some of useless and ambiguous snippets have been removed.
 | `ptsh→`  | `PropTypes.shape({color: PropTypes.string, fontSize: PropTypes.number}),` |
 | `ptshr→` | `PropTypes.shape({color: PropTypes.string, fontSize: PropTypes.number}).isRequired,` |
 
-## License
 
-MIT © [g1eny0ung](https://github.com/g1eny0ung)
-
-Most of code by [Charalampos Karypidis](https://github.com/xabikos) with MIT license.
