@@ -6,6 +6,7 @@
 * Where possible/sane, use goog closure library methods as they are well tested
 and designed for cross-browser consistency.
 
+
 ### Documenting and Comments
 
 The following documentation examples follow the standards used by [Google](https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml) and [JSDoc](https://code.google.com/p/jsdoc-toolkit/).
