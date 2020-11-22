@@ -1,251 +1,114 @@
-# react-and-es6-with-js-standard
-### Indenting
+JavaScript Coding Standards
+===================
 
-- All code MUST indent using two (2) space characters,
-- All code MUST NOT indent using tab characters,
-- All code MUST NOT end with trailing whitespace.
+JavaScript Coding Standards you must conform to when writing JS in Xfive projects.
 
-##  Semicolons
-JavaScript allows optional "semi-colon insertion". Drupal standards do not.
+## Table of contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-All statements (except for, function, if, switch, try, while) MUST be followed by a semi-colon (;),
-Return values MUST start on the same line as the return keyword.
-EXCEPTIONS:
 
-Anonymous functions assigned to a variable MUST be followed by a semi-colon.
-```javascript
-Drupal.behaviors.tableSelect = function (context) {
-  // Statements...
-};
-```
-do/while control structures MUST be followed by a semi-colon
-```javascript
-do {
-  // Statements...
-} while (condition);
-```
-## File-closure
-All JavaScript code MUST be declared inside a closure wrapping the whole file.
-```javascript
-/**
- * @file
- */
-(() => {
-  // All the JavaScript for this file.
-})();
-```
-## CamelCasing
-For variables that are not constants or constructors, multi-word variables and functions SHOULD be lowerCamelCased.
+- [Code style](#code-style)
+- [Line endings](#line-endings)
+- [Variables](#variables)
+- [Comments](#comments)
+- [Modules/dependencies](#modulesdependencies)
+- [Code structure](#code-structure)
+- [License](#license)
 
-The first letter of each variable or function SHOULD be lowercase, and the first letter of subsequent words SHOULD be capitalized. There SHOULD NOT be underscores between the words.
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-In case a variable contains a jQuery object, the variable MUST start with a dollar sign ($):
+## Code style
 
-var $form = $('#search-block-form');
-var $inputs = $form.find('input');
-## Variables and Arrays
-Due to enabled strict mode, an undeclared variable will halt the script, and on old browsers such variables are implicitly exported into global scope.
+Use `eslint-config-chisel` or `eslint-config-airbnb` with `eslint-config-prettier`. This setup allows for automatic code formatting with [Prettier](https://github.com/prettier/prettier) so you don't need to worry about the small details.
 
-All variables MUST be declared with var before they are used and SHOULD be declared only once. All variables SHOULD be declared at the beginning of a function.
+## Line endings
 
-Each variable assignment SHOULD be declared on a separate line - including variables that are only declared but do not get a value assigned.
+Format files with \n as the line ending (Unix line endings). Do not use \r\n (Windows line endings) or \r (Apple OS's).
 
-var anArray = [];
-var eventCallback = function () {};
-var curTableDragSetting;
-var curTableDragIndex;
-## Global Variables
-Drupal JavaScript MUST NOT define global variables.
+## Variables
 
-## Constants
-Pre-defined constants SHOULD be all-uppercase and words separated by underscores: UPPER_UNDERSCORED.
+When you're starting a new project, use the following naming conventions:
 
-Variables added via PHP SHOULD be lowerCamelCased, so that they are consistent with other JavaScript variables:
+- Prefer [block scoping](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block) with let and const.
+- Use `const` to assign a variable unless you’re certain you’re going to reassign it later.
+- In general, use **camelCase** to name variables. Of course, there can be exceptions like sometimes you have_to_use underscores to access a value from JSON and can’t do much about it. Or there’s a third party code which imposes certain naming conventions.
+- Start class names (constructors) with a **BigLetter**.
+- Use **UPPERCASE_WITH_UNDERSCORES** to name constants. You can define constants in JS with assigning a [primitive value](https://developer.mozilla.org/pl/docs/Glossary/Primitive) with `const`.
 
-$element['#attached']['js'][] = array(
-  'data' => array('myModule' => array('basePath' => base_path())), 
-  'type' => 'setting',
-);
-This variable would then be referenced:
+  Following examples have one thing in common: they can’t be reassigned nor mutated. This makes them constants.
 
-Drupal.settings.myModule.basePath;
-## Arrays
-Arrays SHOULD be formatted with one space separating each element and the assignment operator, if applicable:
+  ```js
+  const MARGIN_TOP = 2;
+  const DEBUG_MODE = false;
+  const API_URL = 'http://my-api.com';
+  ```
 
-var someArray = ['hello', 'world'];
-If the line is longer than 80 characters, each element SHOULD be broken into its own line, and indented one level.
+- Avoid UPPERCASE_NAMING for mutable values like arrays or object literals.
 
-Use trailing comma after last element in multi line arrays. Trailing commas simplify adding and removing items to objects and arrays, since only the lines you are modifying must be touched. Also this leads to cleaner git diffs, when an item is added or removed from an object or array.
+  Following examples aren’t constants as they can be easily updated. This is why using uppercase naming is misleading when used with them.
 
-// bad
-var fruits = [
-  'apples',
-  'banana',
-  'pineapple'
-];
+  ```js
+  const MY_ARR = [1, 2, 3];
+  MY_ARR.splice(0);
+  console.log(MY_ARR);
+  // prints []
+  // Holy moly the array is now empty!
 
-// good
-var fruits = [
-  'apples',
-  'banana',
-  'pineapple',
-];
-## Typeof
-In type comparisons, the value tested MUST NOT be wrapped in parenthesis.
+  ```
 
-if (typeof myVariable === 'string') {
-  // ...
-}
-## Functions
-Function and method names
-Function names SHOULD begin with the name of the module or theme declaring the function, so as to avoid name collisions.
+  ```
+  const MY_OBJECT = { a: 'something important' };
+  delete MY_OBJECT.a;
+  console.log(MY_OBJECT);
+  // prints {}
+  // Empty!
+  ```
+- jQuery objects should be prefixed with $: `const $items = $('.some-selector');`
 
-Drupal.behaviors.tableDrag = function (context) {
-  Object.keys(Drupal.settings.tableDrag).forEach(function (base) {
-    $('#' + base).once('tabledrag', addBehavior);
-  });
-};
-Function Declarations
-The function keyword MUST be followed by one space.
-Named functions MUST NOT have a space between the function name and the following left parenthesis.
-Optional arguments (using default values) SHOULD be defined at the end of the function signature.
-Every function SHOULD attempt to return a meaningful value.
-Drupal.behaviors.tableDrag = function (context) {
-  // ...
-  this.clickCallback = function (e) {
-    return false;
-  };
-  // ...
-};
+When working with existing project it is important to recognize and follow the same naming pattern. No matter what conventions are followed, all names should be **descriptive**, identifying what the data variable holds or what the function does.
 
-function funStuff(field, settings) {
-  var settings = settings || Drupal.settings;
-  alert("This JS file does fun message popups.");
-  return field;
-}
+## Comments
 
-// Anonymous:
-() => {}
+**Avoid obvious comments.** They bring _no value_ and make the code _harder to maintain_. Comment only exceptions and code which doesn’t seem to be clear to understand. The latter can be hard to identify. It’s the code _you_ have written  after all so it’s more obvious to you. Don’t hesitate to ask your peers or developers you consider more experienced to take a look at your code!
 
-// Named:
-function closeDialog() {}
-Note: The above examples code are lacking JSDoc and comments, only for clarity.
+## Modules/dependencies
 
-## Function Calls
-Functions SHOULD be called with no spaces between the function name, the opening parenthesis, and the first parameter.
+- Use [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) and [export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) to split your code into components.
+- Make sure you import _just what you need_ and not the whole library. Here's [Lodash example](https://stackoverflow.com/a/35251059). It can vary depending on the package you want to use (sometimes can be even impossible!). In general, verify if your JS bundle size isn't suspiciously big.
+- Use [Yarn](https://yarnpkg.com/lang/en/) to install packages. Not only it's fast but also creates a lockfile which make much easier to setup the project for other developers.
 
-There SHOULD be one space between commas and each parameter, and there SHOULD NOT be a space between the last parameter, the closing parenthesis, and the semicolon.
+## Code structure
+- Prefer to use a class syntax over object literals when structuring your code.
 
-var foobar = foo(bar, baz, quux);
-There SHOULD be one space on either side of an equals sign used to assign the return value of a function to a variable.
+  ```js
+  // You can do it like this
+    const app = {
+      init() {
+        this.doSomething();
+      },
 
-Constructors
-Constructors are functions that are designed to be used with the new prefix. The new prefix creates a new object based on the function's prototype, and binds that object to the function's implied this parameter. JavaScript doesn't issue compile-time warning or run-time warnings if a required new is omitted. If you do not use the new prefix, no new object will be made and operations will be bound to the global object instead.
+      doSomething() {
+        console.log('Bam!');
+      }
+    };
 
-Constructor functions MUST be given names with an initial uppercase character.
+    // But the class is more suitable for the job!
+    class App {
+      constructor() {
+        this.doSomething();
+      }
 
-A function with an initial uppercase name MUST NOT be called without a new operator.
+      doSomething() {
+        console.log('Oh boy a class!');
+      }
+    }
+  ```
 
-function CollapsibleDetails(node) {}
+- When writing a code try to modularize it as much as possible by creating methods/functions. If a project has more JavaScript functionality, add namespaces or separate it into different files (modules).
 
-var collapsibleDetail = new CollapsibleDetails(element);
-Comments
-Inline documentation for source files MUST follow the JavaScript API documentation and comment standards (based on JSDoc).
+## License
 
-Non-JSDoc comments are strongly RECOMMENDED.
+[![](http://i.creativecommons.org/l/by/4.0/88x31.png)](http://creativecommons.org/licenses/by/4.0/)
 
-A general rule of thumb is that if you look at a section of code and think "Wow, I don't want to try and describe that", you SHOULD comment it before you forget how it works. Comments MAY be removed by JS compression utilities later, so they don't negatively impact the file download size.
-
-Non-JSDoc comments SHOULD use capitalized sentences with punctuation. Comments SHOULD be on a separate line, immediately before the code line or block they reference.
-
-// Unselect all other checkboxes.
-doSomething();
-If each line of a list needs a separate comment, comments MAY be placed on the same line and MAY be formatted to a uniform indent for readability.
-
-C style comments (/* */) and standard C++ comments (//) are both allowed.
-
-String Concatenation
-Expressions SHOULD be separated with one space before and after the + operator to improve readability.
-
-var string = 'Foo' + bar;
-string = bar + 'foo';
-string = bar() + 'foo';
-string = 'foo' + 'bar';
-The concatenating assignment operator (+=) SHOULD be separated with one space on each side as with the assignment operator:
-
-var string += 'Foo';
-string += bar;
-string += baz();
-Control Structures
-Control statements MUST have one space between the control keyword and opening parenthesis, to distinguish them from function calls.
-
-Control structures MUST always use curly braces, even in situations where they are optional. Having them increases readability and decreases the likelihood of logic errors being introduced when new lines are added.
-
-These include if, for, while, switch.
-
-Example if statement (the most complicated one):
-
-if (condition1 || condition2) {
-  action1();
-}
-else if (condition3 && condition4) {
-  action2();
-}
-else {
-  defaultAction();
-}
-switch
-For switch statements:
-
-switch (condition) {
-  case 1:
-    action1();
-    break;
-
-  case 2:
-    action2();
-    break;
-
-  default:
-    defaultAction();
-}
-try
-For try/catch statements:
-
-try {
-  // Statements...
-}
-catch (error) {
-  // Error handling...
-}
-finally {
-  // Statements...
-}
-for in
-The body of every for in statement MUST be wrapped in an if statement that performs the filtering. It MAY select for a particular type or range of values, or it can exclude functions, or it can exclude properties from the prototype.
-
-for (var variable in object) {
-  if (filter) {
-    // Statements...
-  }
-}
-You MUST use the hasOwnProperty method to distinguish the true members of the object, which SHOULD be placed inside the loop, not on the same line:
-
-for (var variable in object) {
-  if (object.hasOwnProperty(variable)) {
-    // Statements...
-  }
-}
-Operators
-Comparisons
-The == and != operators do type coercion before comparing. This can lead to unexpected errors.
-
-Strict equality MUST be used in comparisons (=== or !==).
-
-Comma Operator
-You SHOULD NOT use the comma operator, with the exception of the control part in for statements.
-
-The comma operator causes the expressions on either side of it to be executed in left-to-right order, and returns the value of the expression on the right.
-
-var x = (y = 3, z = 9);
-This sets x to 9. This can be confusing for users not familiar with the syntax and makes the code more difficult to read and understand.
+This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
