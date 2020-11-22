@@ -1,130 +1,248 @@
 # react-and-es6-with-js-standard
+### Indenting
 
-This extension combines these extensions' features in one with [JS Standard](https://standardjs.com/).
+- All code MUST indent using two (2) space characters,
+- All code MUST NOT indent using tab characters,
+- All code MUST NOT end with trailing whitespace.
 
-- [JavaScript (ES6) code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets)
-- [Reactjs code snippets](https://marketplace.visualstudio.com/items?itemName=xabikos.ReactSnippets)
+##  Semicolons
+JavaScript allows optional "semi-colon insertion". Drupal standards do not.
 
-At the same time, some of useless and ambiguous snippets have been removed.
+All statements (except for, function, if, switch, try, while) MUST be followed by a semi-colon (;),
+Return values MUST start on the same line as the return keyword.
+EXCEPTIONS:
 
-## Supported languages
+Anonymous functions assigned to a variable MUST be followed by a semi-colon.
+Drupal.behaviors.tableSelect = function (context) {
+  // Statements...
+};
+do/while control structures MUST be followed by a semi-colon
+do {
+  // Statements...
+} while (condition);
+File-closure
+All JavaScript code MUST be declared inside a closure wrapping the whole file.
 
-- JavaScript (.js)
-- TypeScript (.ts)
-- JavaScript React (.jsx)
-- TypeScript React (.tsx)
+/**
+ * @file
+ */
+(() => {
 
-## Snippets
+  // All the JavaScript for this file.
 
-### Import and export
-| Trigger  | Content |
-| -------: | ------- |
-| `imp→`   | imports entire module `import fs from 'fs'`|
-| `imn→`   | imports entire module without module name `import 'animate.css'` |
-| `imd→`   | imports only a portion of the module using destructing  `import { rename } from 'fs'` |
-| `ime→`   | imports everything as alias from the module `import * as localAlias from 'fs'` |
-| `ima→`   | imports only a portion of the module as alias `import { rename  as localRename } from 'fs'` |
-| `enf→`   | exports name function `export const log = (parameter) => { console.log(parameter)}` |
-| `edf→`   | exports default function `export default  (parameter) => { console.log(parameter)}` |
-| `ecl→`   | exports default class `export default class Calculator {}` |
-| `ece→`   | exports default class by extending a base one `export default class Calculator extends BaseClass {}` |
+})();
+CamelCasing
+For variables that are not constants or constructors, multi-word variables and functions SHOULD be lowerCamelCased.
 
-### Class helpers
-| Trigger  | Content |
-| -------: | ------- |
-| `cla→`   | Create a basic class `class A {}`|
-| `clae→`  | Create a basic class with extends `class A extends B {}`|
-| `con→`   | adds default constructor in the class `constructor() {}`|
-| `met→`   | creates a method inside a class `add() {}` |
-| `pge→`   | creates a getter property `get propertyName() {return value}` |
-| `pse→`   | creates a setter property `set propertyName(value) {}` |
+The first letter of each variable or function SHOULD be lowercase, and the first letter of subsequent words SHOULD be capitalized. There SHOULD NOT be underscores between the words.
 
-### Various methods
-| Trigger  | Content |
-| -------: | ------- |
-| `fea→`   | forEach loop in ES6 syntax `array.forEach(currentItem => {})`|
-| `fof→`   | for ... of loop `for(const item of object) {}` |
-| `fin→`   | for ... in loop `for(const item in object) {}` |
-| `anfn→`  | creates an anonymous function `(params) => {}` |
-| `nfn→`   | creates a named function `const add = (params) => {}` |
-| `dob→`   | destructing object syntax `const {rename} = fs` |
-| `dar→`   | destructing array syntax `const [first, second] = [1,2]` |
-| `sti→`   | set interval helper method `setInterval(() => {})` |
-| `sto→`   | set timeout helper method `setTimeout(() => {})` |
-| `prom→`  | creates a new Promise `new Promise((resolve, reject) => {})`|
+In case a variable contains a jQuery object, the variable MUST start with a dollar sign ($):
 
-### Console methods
-| Trigger  | Content |
-| -------: | ------- |
-| `cas→`   | console alert method `console.assert`|
-| `ccl→`   | console clear `console.clear` |
-| `cer→`   | console error `console.error` |
-| `cgr→`   | console group `console.group` |
-| `cge→`   | console groupEnd `console.groupEnd` |
-| `clg→`   | console log `console.log` |
-| `cwa→`   | console warn `console.warn` |
-| `cin→`   | console info `console.info` |
+var $form = $('#search-block-form');
+var $inputs = $form.find('input');
+Variables and Arrays
+Due to enabled strict mode, an undeclared variable will halt the script, and on old browsers such variables are implicitly exported into global scope.
 
-### React
+All variables MUST be declared with var before they are used and SHOULD be declared only once. All variables SHOULD be declared at the beginning of a function.
 
-| Trigger  | Content |
-| -------: | ------- |
-| `rcc→`   | class component skeleton |
-| `rccp→`  | class component skeleton with propTypes |
-| `rfc→`   | functional class component skeleton with propTypes |
-| `rfcp→`  | functional class component skeleton |
-| `con→`   | class default constructor with props|
-| `est→`   | empty state object |
-| `gdsp→`  | `getDerivedStateFromProps method` |
-| `gsbu→`  | `getSnapshotBeforeUpdate method` |
-| `cwm→`   | `componentWillMount method` |
-| `ucwm→`  | `UNSAFE_componentWillMount method` |
-| `cdm→`   | `componentDidMount method` |
-| `cwr→`   | `componentWillReceiveProps method` |
-| `ucwr→`  | `UNSAFE_componentWillReceiveProps method` |
-| `scu→`   | `shouldComponentUpdate method` |
-| `cwup→`  | `componentWillUpdate method` |
-| `ucwup→` | `UNSAFE_componentWillUpdate method` |
-| `cdup→`  | `componentDidUpdate method` |
-| `cwun→`  | `componentWillUnmount method` |
-| `sst→`   | `this.setState with object as parameter` |
-| `ssf→`   | `this.setState with function as parameter` |
-| `rpt→`   | empty propTypes declaration |
-| `rdp→`   | empty defaultProps declaration |
+Each variable assignment SHOULD be declared on a separate line - including variables that are only declared but do not get a value assigned.
 
-### React typechecking
+var anArray = [];
+var eventCallback = function () {};
+var curTableDragSetting;
+var curTableDragIndex;
+Global Variables
+Drupal JavaScript MUST NOT define global variables.
 
-| Trigger  | Content |
-| -------: | ------- |
-| `pta→`   | `PropTypes.array,` |
-| `ptar→`  | `PropTypes.array.isRequired,` |
-| `ptb→`   | `PropTypes.bool,` |
-| `ptbr→`  | `PropTypes.bool.isRequired,` |
-| `ptf→`   | `PropTypes.func,` |
-| `ptfr→`  | `PropTypes.func.isRequired,` |
-| `ptn→`   | `PropTypes.number,` |
-| `ptnr→`  | `PropTypes.number.isRequired,` |
-| `pto→`   | `PropTypes.object,` |
-| `ptor→`  | `PropTypes.object.isRequired,` |
-| `pts→`   | `PropTypes.string,` |
-| `ptsr→`  | `PropTypes.string.isRequired,` |
-| `ptsy→`  | `PropTypes.symbol,` |
-| `ptsyr→` | `PropTypes.symbol.isRequired,` |
-| `ptnd→`  | `PropTypes.node,` |
-| `ptndr→` | `PropTypes.node.isRequired,` |
-| `ptel→`  | `PropTypes.element,` |
-| `ptelr→` | `PropTypes.element.isRequired,` |
-| `pti→`   | `PropTypes.instanceOf(ClassName),` |
-| `ptir→`  | `PropTypes.instanceOf(ClassName).isRequired,` |
-| `pte→`   | `PropTypes.oneOf(['News', 'Photos']),` |
-| `pter→`  | `PropTypes.oneOf(['News', 'Photos']).isRequired,` |
-| `ptet→`  | `PropTypes.oneOfType([PropTypes.string, PropTypes.number]),` |
-| `ptetr→` | `PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,` |
-| `ptao→`  | `PropTypes.arrayOf(PropTypes.number),` |
-| `ptaor→` | `PropTypes.arrayOf(PropTypes.number).isRequired,` |
-| `ptoo→`  | `PropTypes.objectOf(PropTypes.number),` |
-| `ptoor→` | `PropTypes.objectOf(PropTypes.number).isRequired,` |
-| `ptsh→`  | `PropTypes.shape({color: PropTypes.string, fontSize: PropTypes.number}),` |
-| `ptshr→` | `PropTypes.shape({color: PropTypes.string, fontSize: PropTypes.number}).isRequired,` |
+Constants
+Pre-defined constants SHOULD be all-uppercase and words separated by underscores: UPPER_UNDERSCORED.
 
+Variables added via PHP SHOULD be lowerCamelCased, so that they are consistent with other JavaScript variables:
 
+$element['#attached']['js'][] = array(
+  'data' => array('myModule' => array('basePath' => base_path())), 
+  'type' => 'setting',
+);
+This variable would then be referenced:
+
+Drupal.settings.myModule.basePath;
+Arrays
+Arrays SHOULD be formatted with one space separating each element and the assignment operator, if applicable:
+
+var someArray = ['hello', 'world'];
+If the line is longer than 80 characters, each element SHOULD be broken into its own line, and indented one level.
+
+Use trailing comma after last element in multi line arrays. Trailing commas simplify adding and removing items to objects and arrays, since only the lines you are modifying must be touched. Also this leads to cleaner git diffs, when an item is added or removed from an object or array.
+
+// bad
+var fruits = [
+  'apples',
+  'banana',
+  'pineapple'
+];
+
+// good
+var fruits = [
+  'apples',
+  'banana',
+  'pineapple',
+];
+Typeof
+In type comparisons, the value tested MUST NOT be wrapped in parenthesis.
+
+if (typeof myVariable === 'string') {
+  // ...
+}
+Functions
+Function and method names
+Function names SHOULD begin with the name of the module or theme declaring the function, so as to avoid name collisions.
+
+Drupal.behaviors.tableDrag = function (context) {
+  Object.keys(Drupal.settings.tableDrag).forEach(function (base) {
+    $('#' + base).once('tabledrag', addBehavior);
+  });
+};
+Function Declarations
+The function keyword MUST be followed by one space.
+Named functions MUST NOT have a space between the function name and the following left parenthesis.
+Optional arguments (using default values) SHOULD be defined at the end of the function signature.
+Every function SHOULD attempt to return a meaningful value.
+Drupal.behaviors.tableDrag = function (context) {
+  // ...
+  this.clickCallback = function (e) {
+    return false;
+  };
+  // ...
+};
+
+function funStuff(field, settings) {
+  var settings = settings || Drupal.settings;
+  alert("This JS file does fun message popups.");
+  return field;
+}
+
+// Anonymous:
+() => {}
+
+// Named:
+function closeDialog() {}
+Note: The above examples code are lacking JSDoc and comments, only for clarity.
+
+Function Calls
+Functions SHOULD be called with no spaces between the function name, the opening parenthesis, and the first parameter.
+
+There SHOULD be one space between commas and each parameter, and there SHOULD NOT be a space between the last parameter, the closing parenthesis, and the semicolon.
+
+var foobar = foo(bar, baz, quux);
+There SHOULD be one space on either side of an equals sign used to assign the return value of a function to a variable.
+
+Constructors
+Constructors are functions that are designed to be used with the new prefix. The new prefix creates a new object based on the function's prototype, and binds that object to the function's implied this parameter. JavaScript doesn't issue compile-time warning or run-time warnings if a required new is omitted. If you do not use the new prefix, no new object will be made and operations will be bound to the global object instead.
+
+Constructor functions MUST be given names with an initial uppercase character.
+
+A function with an initial uppercase name MUST NOT be called without a new operator.
+
+function CollapsibleDetails(node) {}
+
+var collapsibleDetail = new CollapsibleDetails(element);
+Comments
+Inline documentation for source files MUST follow the JavaScript API documentation and comment standards (based on JSDoc).
+
+Non-JSDoc comments are strongly RECOMMENDED.
+
+A general rule of thumb is that if you look at a section of code and think "Wow, I don't want to try and describe that", you SHOULD comment it before you forget how it works. Comments MAY be removed by JS compression utilities later, so they don't negatively impact the file download size.
+
+Non-JSDoc comments SHOULD use capitalized sentences with punctuation. Comments SHOULD be on a separate line, immediately before the code line or block they reference.
+
+// Unselect all other checkboxes.
+doSomething();
+If each line of a list needs a separate comment, comments MAY be placed on the same line and MAY be formatted to a uniform indent for readability.
+
+C style comments (/* */) and standard C++ comments (//) are both allowed.
+
+String Concatenation
+Expressions SHOULD be separated with one space before and after the + operator to improve readability.
+
+var string = 'Foo' + bar;
+string = bar + 'foo';
+string = bar() + 'foo';
+string = 'foo' + 'bar';
+The concatenating assignment operator (+=) SHOULD be separated with one space on each side as with the assignment operator:
+
+var string += 'Foo';
+string += bar;
+string += baz();
+Control Structures
+Control statements MUST have one space between the control keyword and opening parenthesis, to distinguish them from function calls.
+
+Control structures MUST always use curly braces, even in situations where they are optional. Having them increases readability and decreases the likelihood of logic errors being introduced when new lines are added.
+
+These include if, for, while, switch.
+
+Example if statement (the most complicated one):
+
+if (condition1 || condition2) {
+  action1();
+}
+else if (condition3 && condition4) {
+  action2();
+}
+else {
+  defaultAction();
+}
+switch
+For switch statements:
+
+switch (condition) {
+  case 1:
+    action1();
+    break;
+
+  case 2:
+    action2();
+    break;
+
+  default:
+    defaultAction();
+}
+try
+For try/catch statements:
+
+try {
+  // Statements...
+}
+catch (error) {
+  // Error handling...
+}
+finally {
+  // Statements...
+}
+for in
+The body of every for in statement MUST be wrapped in an if statement that performs the filtering. It MAY select for a particular type or range of values, or it can exclude functions, or it can exclude properties from the prototype.
+
+for (var variable in object) {
+  if (filter) {
+    // Statements...
+  }
+}
+You MUST use the hasOwnProperty method to distinguish the true members of the object, which SHOULD be placed inside the loop, not on the same line:
+
+for (var variable in object) {
+  if (object.hasOwnProperty(variable)) {
+    // Statements...
+  }
+}
+Operators
+Comparisons
+The == and != operators do type coercion before comparing. This can lead to unexpected errors.
+
+Strict equality MUST be used in comparisons (=== or !==).
+
+Comma Operator
+You SHOULD NOT use the comma operator, with the exception of the control part in for statements.
+
+The comma operator causes the expressions on either side of it to be executed in left-to-right order, and returns the value of the expression on the right.
+
+var x = (y = 3, z = 9);
+This sets x to 9. This can be confusing for users not familiar with the syntax and makes the code more difficult to read and understand.
