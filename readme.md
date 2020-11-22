@@ -13,25 +13,28 @@ Return values MUST start on the same line as the return keyword.
 EXCEPTIONS:
 
 Anonymous functions assigned to a variable MUST be followed by a semi-colon.
+```javascript
 Drupal.behaviors.tableSelect = function (context) {
   // Statements...
 };
+```
 do/while control structures MUST be followed by a semi-colon
+```javascript
 do {
   // Statements...
 } while (condition);
-File-closure
+```
+## File-closure
 All JavaScript code MUST be declared inside a closure wrapping the whole file.
-
+```javascript
 /**
  * @file
  */
 (() => {
-
   // All the JavaScript for this file.
-
 })();
-CamelCasing
+```
+## CamelCasing
 For variables that are not constants or constructors, multi-word variables and functions SHOULD be lowerCamelCased.
 
 The first letter of each variable or function SHOULD be lowercase, and the first letter of subsequent words SHOULD be capitalized. There SHOULD NOT be underscores between the words.
@@ -40,7 +43,7 @@ In case a variable contains a jQuery object, the variable MUST start with a doll
 
 var $form = $('#search-block-form');
 var $inputs = $form.find('input');
-Variables and Arrays
+## Variables and Arrays
 Due to enabled strict mode, an undeclared variable will halt the script, and on old browsers such variables are implicitly exported into global scope.
 
 All variables MUST be declared with var before they are used and SHOULD be declared only once. All variables SHOULD be declared at the beginning of a function.
@@ -51,10 +54,10 @@ var anArray = [];
 var eventCallback = function () {};
 var curTableDragSetting;
 var curTableDragIndex;
-Global Variables
+## Global Variables
 Drupal JavaScript MUST NOT define global variables.
 
-Constants
+## Constants
 Pre-defined constants SHOULD be all-uppercase and words separated by underscores: UPPER_UNDERSCORED.
 
 Variables added via PHP SHOULD be lowerCamelCased, so that they are consistent with other JavaScript variables:
@@ -66,7 +69,7 @@ $element['#attached']['js'][] = array(
 This variable would then be referenced:
 
 Drupal.settings.myModule.basePath;
-Arrays
+## Arrays
 Arrays SHOULD be formatted with one space separating each element and the assignment operator, if applicable:
 
 var someArray = ['hello', 'world'];
@@ -87,13 +90,13 @@ var fruits = [
   'banana',
   'pineapple',
 ];
-Typeof
+## Typeof
 In type comparisons, the value tested MUST NOT be wrapped in parenthesis.
 
 if (typeof myVariable === 'string') {
   // ...
 }
-Functions
+## Functions
 Function and method names
 Function names SHOULD begin with the name of the module or theme declaring the function, so as to avoid name collisions.
 
@@ -128,7 +131,7 @@ function funStuff(field, settings) {
 function closeDialog() {}
 Note: The above examples code are lacking JSDoc and comments, only for clarity.
 
-Function Calls
+## Function Calls
 Functions SHOULD be called with no spaces between the function name, the opening parenthesis, and the first parameter.
 
 There SHOULD be one space between commas and each parameter, and there SHOULD NOT be a space between the last parameter, the closing parenthesis, and the semicolon.
